@@ -14,7 +14,7 @@ function Login() {
           Wacky Toshi web dashboard
         </Typography>
         <Button variant="contained" color="primary" startIcon={<Avatar src={discordLogo} variant="rounded"/>} 
-          href="https://discord.com/oauth2/authorize?client_id=797767418285260802&redirect_uri=http://localhost:42069/auth/callback&response_type=code&scope=identify">
+          href="https://discord.com/oauth2/authorize?client_id=797767418285260802&redirect_uri=http://api.toshi.kikkia.dev/auth/callback&response_type=code&scope=identify">
           Signin with Discord
         </Button>
       </Paper>
