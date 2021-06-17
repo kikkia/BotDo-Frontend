@@ -14,7 +14,11 @@ class Home extends React.Component {
         })
             .then(
                 (result) => {
-                    this.props.history.push('/dashboard');
+                    if (result.status == 200) {
+                        this.props.history.push('/dashboard');
+                    } else {
+                        this.props.history.push('/login');
+                    }
                 },
                 (error) => {
                     this.props.history.push('/login');
