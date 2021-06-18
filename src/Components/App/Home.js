@@ -7,7 +7,7 @@ class Home extends React.Component {
     }
 
     amIAuthed() {
-        fetch("http://api.toshi.kikkia.dev/auth/test", 
+        fetch("http://toshi-api.kikkia.dev/auth/test", 
         {
             credentials: 'include',
             mode: "cors"
