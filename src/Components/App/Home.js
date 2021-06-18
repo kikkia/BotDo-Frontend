@@ -10,11 +10,11 @@ class Home extends React.Component {
         fetch("https://toshi-api.kikkia.dev/auth/test", 
         {
             credentials: 'include',
-            mode: "cors"
+            mode: "no-cors"
         })
             .then(
                 (result) => {
-                    if (result.status == 200) {
+                    if (result.status === 200) {
                         this.props.history.push('/dashboard');
                     } else {
                         this.props.history.push('/login');
