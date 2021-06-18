@@ -10,7 +10,7 @@ class Home extends React.Component {
         fetch("https://toshi-api.kikkia.dev/auth/test", 
         {
             credentials: 'include',
-            mode: "no-cors"
+            mode: "cors"
         })
             .then(
                 (result) => {
