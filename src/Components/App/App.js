@@ -5,17 +5,25 @@ import Home from './Home';
 import Dashboard from './Dashboard';
 import Error from './Error';
 import Login from './Login';
+import Auth from './Auth';
 import Navigation from './Navigation';
+import AuthenticatedRoute from '../../routes/AuthenticatedRoute';
 
 function App() {
+  const authed = sessionStorage.getItem("authed")
   return (
     <BrowserRouter>
       <div>
-        <Navigation />
+        <Navigation title = "Wacky Toshi" auth = {authed}/>
         <Switch>
           <Route path="/" component={Home} exact/>
           <Route path="/login" component={Login}/>
-          <Route path="/dashboard" component={Dashboard}/>
+          <Route path="/auth" component={Auth}/>
+          <AuthenticatedRoute 
+            path="/dashboard" 
+            component={Dashboard} 
+            appProps={ {isAuthed: authed} }
+          />
           <Route component={Error}/>
         </Switch>
       </div>
