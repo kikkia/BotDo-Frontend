@@ -6,7 +6,7 @@ export default function AuthenticatedRoute({ component: C, appProps, ...rest }) 
         {...rest}
         render={
             props => 
-                appProps.isAuthed === "true" 
+                sessionStorage.authed === "true" 
                 ? <C {...props} {...appProps}/>
                 : <Redirect to={`/auth`}/>}
       />
