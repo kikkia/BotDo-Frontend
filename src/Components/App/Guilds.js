@@ -29,7 +29,11 @@ const Guilds = () => {
     // similar to componentDidMount()
     console.log("env: " + process.env.REACT_APP_API_URL)
     useEffect(() => {
-        fetch(process.env.REACT_APP_API_URL + "/me/guilds")
+        fetch(process.env.REACT_APP_API_URL + "/me/guilds",
+        {
+            credentials: 'include',
+            mode: "cors"
+        })
             .then(res => res.json())
             .then(
                 (result) => {
