@@ -17,7 +17,7 @@ class Auth extends React.Component {
     }
 
     amIAuthed() {
-        fetch("https://toshi-api.kikkia.dev/auth/test", 
+        fetch(process.env.REACT_APP_API_URL + "/auth/test", 
         {
             credentials: 'include',
             mode: "cors"

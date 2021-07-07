@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import Home from './Home';
 import Dashboard from './Dashboard';
+import Guilds from "./Guilds";
 import Error from './Error';
 import Login from './Login';
 import Auth from './Auth';
@@ -23,6 +24,11 @@ function App() {
             path="/dashboard" 
             component={Dashboard} 
             appProps={ {isAuthed: authed} }
+          />
+          <AuthenticatedRoute
+            path="/guilds"
+            component={Guilds}
+            appProps={{isAuthed: authed}}
           />
           <Route component={Error}/>
         </Switch>

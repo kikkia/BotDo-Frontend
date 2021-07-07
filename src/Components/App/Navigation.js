@@ -27,7 +27,7 @@ const Navigation = (props) => {
         startIcon={<Avatar src={'http://www.wpsimplesponsorships.com/wp-content/uploads/2019/05/cropped-icon-256x256.png'} />}>
             User
         </Button> :
-        <Button color="inherit" href="https://discord.com/api/oauth2/authorize?client_id=797767418285260802&redirect_uri=https%3A%2F%2Ftoshi-api.kikkia.dev%2Fauth%2Fcallback&response_type=code&scope=identify">
+        <Button color="inherit" href={process.env.REACT_APP_LOGIN_URL}>
             Login with Discord
         </Button>
 
