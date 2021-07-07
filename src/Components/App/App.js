@@ -22,13 +22,11 @@ function App() {
           <Route path="/auth" component={Auth}/>
           <AuthenticatedRoute 
             path="/dashboard" 
-            component={Dashboard} 
-            appProps={ {isAuthed: authed} }
+            component={Dashboard}
           />
           <AuthenticatedRoute
             path="/guilds"
             component={Guilds}
-            appProps={{isAuthed: authed}}
           />
           <Route component={Error}/>
         </Switch>
