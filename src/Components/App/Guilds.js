@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -16,9 +17,10 @@ const useStyles = makeStyles({
       height: 140,
     },
   });
- 
+
 const Guilds = () => {
     const classes = useStyles();
+    const history = useHistory();
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -27,9 +29,8 @@ const Guilds = () => {
     // Note: the empty deps array [] means
     // this useEffect will run once
     // similar to componentDidMount()
-    console.log("env: " + process.env.REACT_APP_API_URL)
     useEffect(() => {
-        fetch(process.env.REACT_APP_API_URL + "/me/guilds",
+        fetch("/api/me/guilds",
         {
             credentials: 'include',
             mode: "cors"
@@ -37,8 +38,8 @@ const Guilds = () => {
             .then(res => res.json())
             .then(
                 (result) => {
-                    setIsLoaded(true);
                     setItems(result);
+                    setIsLoaded(true);
                 },
                 // Note: it's important to handle errors here
                 // instead of a catch() block so that we don't swallow
@@ -58,7 +59,7 @@ const Guilds = () => {
         return (
             <div>
                <h1>Please Select what guild you want to manage.</h1>
-                {items.map(item => (
+                {items.guilds.map(item => (
                     <Card className={classes.root}>
                     <CardActionArea>
                       <CardMedia
@@ -77,12 +78,15 @@ const Guilds = () => {
                       </CardContent>
                     </CardActionArea>
                     <CardActions>
-                      <Button size="small" color="primary">
+                      <Button size="small" color="primary" onClick={() => {
+                          localStorage.setItem("guild", item.guildId);
+                          history.push("/dashboard")}}>
                         Manage this guild
                       </Button>
                     </CardActions>
                   </Card>
-                ))}
+                ))
+                }
             </div>
          );
     }

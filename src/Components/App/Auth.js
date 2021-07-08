@@ -1,9 +1,17 @@
 import React from 'react';
+import Cookies from 'js-cookie'
+var qs = require('qs');
+
 
 class Auth extends React.Component {
     constructor(props, context) {
         super(props)
-        this.amIAuthed();
+        let code = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).code
+        if(code != null) {
+            this.attemptAuth(code)
+        } else {
+            this.amIAuthed();
+        }
     }
 
     setAuthed(state) {
@@ -17,7 +25,7 @@ class Auth extends React.Component {
     }
 
     amIAuthed() {
-        fetch(process.env.REACT_APP_API_URL + "/auth/test", 
+        fetch("/api/auth/test", 
         {
             credentials: 'include',
             mode: "cors"
@@ -34,6 +42,29 @@ class Auth extends React.Component {
                     }
                 },
                 (error) => {
+                    this.props.history.push('/login');
+                    this.setAuthed(false)
+                }
+            )
+    }
+
+    attemptAuth(code) {
+        console.log("Attempting to callback auth")
+        fetch("/api/auth/callback?code=" + code)
+            .then(
+                (result) => {
+                    if (result.status === 200) {
+                        console.log("successfull auth")
+                        this.setAuthed(true)
+                        this.props.history.push('/dashboard');
+                    } else {
+                        console.log("failed auth" + result.status)
+                        this.setAuthed(false)
+                        this.props.history.push('/login');
+                    }
+                },
+                (error) => {
+                    console.log(error)
                     this.props.history.push('/login');
                     this.setAuthed(false)
                 }
