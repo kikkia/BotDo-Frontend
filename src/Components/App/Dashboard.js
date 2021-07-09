@@ -24,6 +24,7 @@ const Dashboard = () => {
 
     if (!localStorage.getItem("guild")) {
       history.push('/guilds');
+      return(<div></div>)
     }
 
     return (
