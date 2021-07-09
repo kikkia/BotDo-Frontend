@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, AppBar, Toolbar, Typography, IconButton, Button } from '@material-ui/core';
+import {AppBar, Toolbar, Typography, IconButton, Button, Avatar, List, Drawer, 
+    ListItem, Divider, ListItemIcon, ListItemText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import Cookies from 'js-cookie'
+import avatarUtils from '../../utils/avatars';
+import HomeIcon from '@material-ui/icons/Home';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 
 import { NavLink } from 'react-router-dom';
  
@@ -14,29 +22,73 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-
 const Navigation = (props) => {
     const classes = useStyles();
-    const title = props.title
-    const auth = props.auth
+    const title = props.title;
+    const auth = sessionStorage.getItem("authed");
+    const [state, setState] = React.useState({
+        state: false
+    });
 
+    const toggleDrawer = (open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+          return;
+        }
+    
+        setState({ ...state, state: open });
+      };
+
+    let avatarUrl = auth === "true" ? avatarUtils.getAvatarUrl(Cookies.get("userId"), Cookies.get("avatar")) 
+        : "";
     const userButton = auth === "true" ?
-        <Button
-        variant="contained"
-        color="secondary"
-        startIcon={<Avatar src={'http://www.wpsimplesponsorships.com/wp-content/uploads/2019/05/cropped-icon-256x256.png'} />}>
-            User
+        <Button variant="contained" color="secondary" startIcon={<Avatar src={avatarUrl}/>}>
+            {Cookies.get("username")}
         </Button> :
         <Button color="inherit" href={process.env.REACT_APP_LOGIN_URL}>
             Login with Discord
         </Button>
 
+    // Defines nav drawer pages
+    const list = () => (
+        <div
+        role="presentation"
+        onClick={toggleDrawer(false)}
+        onKeyDown={toggleDrawer(false)}
+        >
+        <List>
+            <ListItem button key="home">
+                <ListItemIcon><HomeIcon/></ListItemIcon>
+                <NavLink to="/">Home</NavLink>
+            </ListItem>
+            <ListItem button key="dashboard">
+                <ListItemIcon><DashboardIcon/></ListItemIcon>
+                <NavLink to="/dashboard">Dashboard</NavLink>
+            </ListItem>
+            <ListItem button key="guilds">
+                <ListItemIcon><SwapHorizIcon/></ListItemIcon>
+                <NavLink to="/guilds">Change Guilds</NavLink>
+            </ListItem>
+        </List>
+        <Divider />
+        <List>
+            <ListItem button key="Logout">
+                <ListItemIcon><ExitToAppIcon/></ListItemIcon>
+                <ListItemText primary="Logout" />
+            </ListItem>
+        </List>
+        </div>
+    );
+
     return (
         <AppBar position="static">
             <Toolbar>
-                <IconButton edge="start" color="inherit" aria-label="menu" className={classes.menuButton}>
+                <IconButton edge="start" color="inherit" aria-label="menu" 
+                    className={classes.menuButton} onClick={toggleDrawer(true)}>
                     <MenuIcon />
                 </IconButton>
+                <Drawer anchor="left" open={state["state"]} onClose={toggleDrawer(false)}>
+                    {list("left")}
+                </Drawer>
                 <Typography variant="h6" className={classes.title}>
                     {title}
                 </Typography>
@@ -51,4 +103,4 @@ const Navigation = (props) => {
     );
 }
  
-export default Navigation;
+export default withRouter(Navigation);

@@ -11,11 +11,10 @@ import Navigation from './Navigation';
 import AuthenticatedRoute from '../../routes/AuthenticatedRoute';
 
 function App() {
-  const authed = sessionStorage.getItem("authed")
   return (
     <BrowserRouter>
       <div>
-        <Navigation title = "Wacky Toshi" auth = {authed}/>
+        <Navigation title = "Wacky Toshi"/>
         <Switch>
           <Route path="/" component={Home} exact/>
           <Route path="/login" component={Login}/>
