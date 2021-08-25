@@ -123,7 +123,7 @@ const RecruitPosts = (props) => {
                             </Chart>
                         </Paper>
                     </Grid>
-                    <Grid item xs={3} spacing={3}>
+                    <Grid item xs={5} spacing={3}>
                     <Paper className={classes.paper}>
                         <Chart data={postsByUser}>
                             <ArgumentAxis />
