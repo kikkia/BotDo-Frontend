@@ -144,9 +144,6 @@ const Content = ({timeframe}) => {
     } else if (!isLoaded) {
         return (<div>Loading...</div>);
     } else {
-        // sort past wars
-
-        // Set user war attendance stats
         let attendanceMap = {}
         pastWars.forEach(war => {
             war.attendees.forEach(attendee => {
@@ -205,7 +202,7 @@ const Content = ({timeframe}) => {
                                 argumentField="date"
                                 seriesComponent={Area}
                             />
-                            <Title text="War attendance over the past <PLACEHOLDER>" />
+                            <Title text="Past war attendance" />
                         </Chart>
                     </Paper>
                 </Grid>
