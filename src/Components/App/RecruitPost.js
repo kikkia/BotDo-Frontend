@@ -61,7 +61,7 @@ function parseRecruitPostInfo(results) {
     return response
 }
 
-const RecruitPosts = (props) => {
+const RecruitPosts = ({timeframe}) => {
     const classes = useStyles();
     const history = useHistory();
 
@@ -75,7 +75,7 @@ const RecruitPosts = (props) => {
     // this useEffect will run once
     // similar to componentDidMount()
     useEffect(() => {
-        fetch("/api/" + localStorage.getItem("guild") + "/recruitment/posts?daysAgo=7",
+        fetch("/api/" + localStorage.getItem("guild") + "/recruitment/posts?daysAgo=" + timeframe,
         {
             credentials: 'include',
             mode: "cors"
@@ -97,7 +97,7 @@ const RecruitPosts = (props) => {
                     setError(error);
                 }
       )
-    }, [])
+    }, [timeframe])
 
     if (error) {
         return (<div>Error: {error.message}</div>);

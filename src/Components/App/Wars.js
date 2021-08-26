@@ -45,7 +45,7 @@ const userTableColumns = [
     { field: 'count', headerName: 'Wars Attended', width: 175, type: 'number' }
 ]
 
-const Content = () => { 
+const Content = ({timeframe}) => { 
     const classes = useStyles();
     const history = useHistory();
     const [error, setError] = useState("");
@@ -60,7 +60,7 @@ const Content = () => {
     // this useEffect will run once
     // similar to componentDidMount()
     useEffect(() => {
-        fetch("/api/" + localStorage.getItem("guild") + "/war/history?daysAgo=30",
+        fetch("/api/" + localStorage.getItem("guild") + "/war/history?daysAgo=" + timeframe,
         {
             credentials: 'include',
             mode: "cors"
@@ -137,7 +137,7 @@ const Content = () => {
                 setError(error);
             }
         )
-    }, [])
+    }, [timeframe])
 
     if (error) {
         return (<div>Error: {error.message}</div>);
