@@ -3,6 +3,15 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@material-ui/data-grid';
 import { Grid, Paper } from '@material-ui/core'
+import { Chart, ArgumentAxis, ValueAxis,
+    AreaSeries,
+    Title,
+    Legend,
+  } from '@devexpress/dx-react-chart-material-ui';
+import { ArgumentScale, Animation } from '@devexpress/dx-react-chart';
+import { curveCatmullRom, area, } from 'd3-shape';
+import { scalePoint } from 'd3-scale';
+import { withStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,7 +22,21 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
       color: theme.palette.text.secondary,
     },
+    chart: {
+        paddinzgRight: '20px',
+    },
 }));
+
+const Area = props => (
+    <AreaSeries.Path
+      {...props}
+      path={area()
+        .x(({ arg }) => arg)
+        .y1(({ val }) => val)
+        .y0(({ startVal }) => startVal)
+        .curve(curveCatmullRom)}
+    />
+  );
 
 const userTableColumns = [
     { field: "id", headerName: "ID", width: 100},
@@ -37,7 +60,7 @@ const Content = () => {
     // this useEffect will run once
     // similar to componentDidMount()
     useEffect(() => {
-        fetch("/api/" + localStorage.getItem("guild") + "/war/history?daysAgo=7",
+        fetch("/api/" + localStorage.getItem("guild") + "/war/history?daysAgo=30",
         {
             credentials: 'include',
             mode: "cors"
@@ -63,7 +86,7 @@ const Content = () => {
             }
         )
         
-        fetch("/api/" + localStorage.getItem("guild") + "/war/upcoming?",
+        fetch("/api/" + localStorage.getItem("guild") + "/war/upcoming",
         {
             credentials: 'include',
             mode: "cors"
@@ -121,7 +144,9 @@ const Content = () => {
     } else if (!isLoaded) {
         return (<div>Loading...</div>);
     } else {
-        // Set war attendance stats
+        // sort past wars
+
+        // Set user war attendance stats
         let attendanceMap = {}
         pastWars.forEach(war => {
             war.attendees.forEach(attendee => {
@@ -142,6 +167,20 @@ const Content = () => {
             }
         })
 
+        // Set past war attendance graph
+        let pastWarAttendance = []
+        let dateFormattingOptions = { weekday: 'short', month: 'short', day: 'numeric' };
+        pastWars.forEach(war => {
+            let attended = 0
+            war.attendees.forEach(attendee => {
+                if (attendee.attended)
+                    attended++
+            })
+            let warDate = new Date(war.warTime)
+            pastWarAttendance.push({date: warDate.toLocaleDateString("en-US", dateFormattingOptions), 
+                attendees: attended})
+        })
+
         let attendance = (Object.values(attendanceMap))
 
         return (<div>
@@ -156,7 +195,18 @@ const Content = () => {
                 </Grid>
                 <Grid item xs={8} spacing={3}>
                     <Paper className={classes.paper}>
-                        
+                        <Chart data={pastWarAttendance} className={classes.chart}>
+                            <ArgumentScale factory={scalePoint} />
+                            <ArgumentAxis />
+                            <ValueAxis />
+                            <AreaSeries
+                                name="Attendance"
+                                valueField="attendees"
+                                argumentField="date"
+                                seriesComponent={Area}
+                            />
+                            <Title text="War attendance over the past <PLACEHOLDER>" />
+                        </Chart>
                     </Paper>
                 </Grid>
                 <Grid item xs={5} spacing={3}>
