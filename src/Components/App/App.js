@@ -7,6 +7,9 @@ import Guilds from "./Guilds";
 import Error from './Error';
 import Login from './Login';
 import Auth from './Auth';
+import GearHelp from './GearHelp';
+import WarHelp from './WarHelp';
+import Lookup from './Lookup';
 import Navigation from './Navigation';
 import AuthenticatedRoute from '../../routes/AuthenticatedRoute';
 
@@ -17,6 +20,9 @@ function App() {
         <Navigation title = "Wacky Toshi"/>
         <Switch>
           <Route path="/" component={Home} exact/>
+          <Route path="/gear" component={GearHelp}/>
+          <Route path="/war" component={WarHelp}/>
+          <Route path="/lookup" component={Lookup}/>
           <Route path="/login" component={Login}/>
           <Route path="/auth" component={Auth}/>
           <AuthenticatedRoute 
