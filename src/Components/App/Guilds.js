@@ -80,7 +80,7 @@ const Guilds = () => {
                     <CardActions>
                       <Button size="small" color="primary" onClick={() => {
                           localStorage.setItem("guild", item.guildId);
-                          history.push("/dashboard")}}>
+                          history.push("/")}}>
                         Manage this guild
                       </Button>
                     </CardActions>

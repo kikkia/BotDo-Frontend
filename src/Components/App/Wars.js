@@ -56,9 +56,6 @@ const Content = ({timeframe}) => {
     const [selected, setSelected] = useState(null);
     const [open, setOpen] = useState(false);
 
-    // Note: the empty deps array [] means
-    // this useEffect will run once
-    // similar to componentDidMount()
     useEffect(() => {
         fetch("/api/" + localStorage.getItem("guild") + "/war/history?daysAgo=" + timeframe,
         {
@@ -155,14 +152,16 @@ const Content = ({timeframe}) => {
             })
         })
 
-        // Fill in eligible that may have never showed
-        Object.values(users).forEach(user => {
-            if (attendanceMap[user.userId] == null) {
-                attendanceMap[user.userId] = {id: user.userId, count: 0, class: user.className, displayName: user.displayName}
-            } else {
-                attendanceMap[user.userId].class = user.className
-            }
-        })
+        if (users != null) {
+            // Fill in eligible that may have never showed
+            Object.values(users).forEach(user => {
+                if (attendanceMap[user.userId] == null) {
+                    attendanceMap[user.userId] = {id: user.userId, count: 0, class: user.className, displayName: user.displayName}
+                } else {
+                    attendanceMap[user.userId].class = user.className
+                }
+            })
+        }
 
         // Set past war attendance graph
         let pastWarAttendance = []
