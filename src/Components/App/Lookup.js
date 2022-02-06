@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     height: "100%",
     paddinzgRight: '20px',
+  },
+  currentGuild: {
+    color: "#FFF",
+    textAlign: "center"
   }
 }));
 
@@ -178,7 +182,7 @@ function Lookup() {
       return (<div>Error: {error.message}</div>);
   } else if (!hasSearched) {
     return (<div>
-        <h1>Family Lookup</h1>
+        <h1 className={classes.currentGuild}>Family Lookup</h1>
         <Grid container spacing={0}>
             <Grid item xs={12} spacing={3}>
                 <Paper className={classes.paper}>
@@ -208,14 +212,14 @@ function Lookup() {
             </Grid>
             <Grid item xs={12} spacing={3}>
                 <Paper className={classes.paper}>
-                    "test"
+                    "Enter a family name to look up their guild history."
                 </Paper>
             </Grid>
         </Grid>
     </div>)
   } else if (!isLoaded) {
     return (<div>
-      <h1>Family Lookup</h1>
+      <h1 className={classes.currentGuild}>Family Lookup</h1>
       <Grid container spacing={0}>
           <Grid item xs={12} spacing={3}>
               <Paper className={classes.paper}>
@@ -252,14 +256,19 @@ function Lookup() {
   </div>)
   } else {
     let memberships = [];
+    let currentGuild = "None"
     // Do some quick data processing guild history
     if (fetchedUser.memberships != null) {
       fetchedUser.memberships.forEach(membership => {
         memberships.push({displayName: membership.guild.name, joined: membership.created, active: membership.active, id: membership.id})
+        if (membership.active === true) {
+          currentGuild = membership.guild.name
+        }
       })
     }
+    let sortedMem = memberships.sort((a, b) => b.joined - a.joined);
     return (<div>
-      <h1>Family Lookup</h1>
+      <h1 className={classes.currentGuild}>Family Lookup</h1>
       <Grid container spacing={0}>
           <Grid item xs={12} spacing={3}>
               <Paper className={classes.paper}>
@@ -288,6 +297,7 @@ function Lookup() {
               </Paper>
           </Grid>
           <Grid item xs={12} spacing={3}>
+              <h2 className={classes.currentGuild}>Current Guild: {currentGuild}</h2>
               <Paper className={classes.paperPop}>
                 <DataGrid rows={memberships} className={classes.chart}
                   columns={historyTableColumns} 
