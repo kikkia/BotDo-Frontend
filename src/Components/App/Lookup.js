@@ -150,6 +150,8 @@ function Lookup() {
       if (res.status === 401) {
         localStorage.setItem("authed", false);
         history.push('/login')
+      } if (res.status === 429) {
+        throw new Error('You are searching too fast, users can only search 10 times per minute.')
       }
       return res.json()
     })
@@ -179,7 +181,7 @@ function Lookup() {
   }
 
   if (error) {
-      return (<div>Error: {error.message}</div>);
+      return (<div className={classes.currentGuild}>Error: {error.message}</div>);
   } else if (!hasSearched) {
     return (<div>
         <h1 className={classes.currentGuild}>Family Lookup</h1>
