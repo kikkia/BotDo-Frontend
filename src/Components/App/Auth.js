@@ -33,7 +33,7 @@ class Auth extends React.Component {
             .then(
                 (result) => {
                     if (result.status === 200) {
-                        this.props.history.push('/dashboard');
+                        this.props.history.push('/');
                         this.setSessionProps(result.json())
                         this.setAuthed(true)
                     } else {
@@ -56,7 +56,7 @@ class Auth extends React.Component {
                     if (result.status === 200) {
                         console.log("successfull auth")
                         this.setAuthed(true)
-                        this.props.history.push('/dashboard');
+                        this.props.history.push('/');
                     } else {
                         console.log("failed auth" + result.status)
                         this.setAuthed(false)
