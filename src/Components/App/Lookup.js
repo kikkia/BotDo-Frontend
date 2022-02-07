@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import { DataGrid, GridOverlay } from '@material-ui/data-grid';
 import { Grid, Paper, Box, TextField, MenuItem, Select, FormControl } from '@material-ui/core'
-import { styled } from '@material-ui/core/styles'
+import { styled, createMuiTheme } from '@material-ui/core/styles'
+import theme from '../../theme';
 
 const dateFormattingOptions = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
 
@@ -13,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
+    width: "100%",
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexGrow: 1,
     height: "100%",
+    width: "99%",
     paddinzgRight: '20px',
   },
   currentGuild: {
@@ -183,26 +186,27 @@ function Lookup() {
   if (error) {
       return (<div className={classes.currentGuild}>Error: {error.message}</div>);
   } else if (!hasSearched) {
-    return (<div>
+    return (
+    <ThemeProvider theme={theme}>
+    <div>
         <h1 className={classes.currentGuild}>Family Lookup</h1>
         <Grid container spacing={0}>
             <Grid item xs={12} spacing={3}>
                 <Paper className={classes.paper}>
                 <Box
                     component="form"
-                    sx={{
-                      '& > :not(style)': { m: 1, width: '50%' },
-                    }}
+                    
                     noValidate
                     autoComplete="off"
                   >
                     <TextField id="filled-basic" label="Family Name" variant="filled" onKeyDown={handleSearch} />
-                    <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                    <FormControl variant="filled">
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={region}
                         label="Region"
+                        color="secondary"
                         onChange={handleRegionChange}
                       >
                         <MenuItem value={"NA"}>NA</MenuItem>
@@ -218,23 +222,22 @@ function Lookup() {
                 </Paper>
             </Grid>
         </Grid>
-    </div>)
+    </div></ThemeProvider>)
   } else if (!isLoaded) {
-    return (<div>
+    return (
+      <ThemeProvider theme={theme}>
+    <div>
       <h1 className={classes.currentGuild}>Family Lookup</h1>
       <Grid container spacing={0}>
           <Grid item xs={12} spacing={3}>
               <Paper className={classes.paper}>
               <Box
                   component="form"
-                  sx={{
-                    '& > :not(style)': { m: 1, width: '50%' },
-                  }}
                   noValidate
                   autoComplete="off"
                 >
                   <TextField id="filled-basic" label="Family Name" variant="filled" onKeyDown={handleSearch} />
-                  <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                  <FormControl variant="filled">
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
@@ -255,7 +258,7 @@ function Lookup() {
               </Paper>
           </Grid>
       </Grid>
-  </div>)
+  </div></ThemeProvider>)
   } else {
     let memberships = [];
     let currentGuild = "None"
@@ -269,21 +272,20 @@ function Lookup() {
       })
     }
     let sortedMem = memberships.sort((a, b) => b.joined - a.joined);
-    return (<div>
+    return (
+      <ThemeProvider theme={theme}>
+        <div>
       <h1 className={classes.currentGuild}>Family Lookup</h1>
       <Grid container spacing={0}>
           <Grid item xs={12} spacing={3}>
               <Paper className={classes.paper}>
               <Box
                   component="form"
-                  sx={{
-                    '& > :not(style)': { m: 1, width: '50%' },
-                  }}
                   noValidate
                   autoComplete="off"
                 >
                   <TextField id="filled-basic" label="Family Name" variant="filled" onKeyDown={handleSearch} />
-                  <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                  <FormControl variant="filled">
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
@@ -310,7 +312,7 @@ function Lookup() {
               </Paper>
           </Grid>
       </Grid>
-  </div>)
+  </div></ThemeProvider>)
   }
 }
 export default Lookup;

@@ -14,6 +14,9 @@ import QuestionIcon from '@material-ui/icons/QuestionAnswerRounded';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 
 import { NavLink } from 'react-router-dom';
+
+const botInvite = "https://discord.com/oauth2/authorize?client_id=797767418285260802&scope=bot&permissions=2084039792"
+const docsLink = "https://github.com/kikkia/BotDO/blob/master/docs/getting_started.md"
  
 const useStyles = makeStyles(theme => ({
     menuButton: {
@@ -28,13 +31,13 @@ const Navigation = (props) => {
     const history = useHistory();
     const classes = useStyles();
     const title = props.title;
-    const auth = sessionStorage.getItem("authed");
+    const auth = localStorage.getItem("authed");
     const [state, setState] = React.useState({
         state: false
     });
 
     const logout = (event) => {
-        sessionStorage.setItem("authed", false)
+        localStorage.setItem("authed", false)
         fetch("/api/auth/logout")
         history.push("/")
     }
@@ -88,6 +91,14 @@ const Navigation = (props) => {
             <ListItem button key="guilds" onClick={ () => history.push("/guilds") }>
                 <ListItemIcon><SwapHorizIcon/></ListItemIcon>
                 <ListItemText primary="Change Guilds" />
+            </ListItem>
+            <ListItem button key="add" onClick={() => window.open(botInvite, "_blank")}>
+                <ListItemIcon><ExitToAppIcon/></ListItemIcon>
+                <ListItemText primary="Add bot to server" />
+            </ListItem>
+            <ListItem button key="docs" onClick={() => window.open(docsLink, "_blank")}>
+                <ListItemIcon><ExitToAppIcon/></ListItemIcon>
+                <ListItemText primary="Getting started with Toshi" />
             </ListItem>
         </List>
         <Divider />

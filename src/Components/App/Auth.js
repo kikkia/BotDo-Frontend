@@ -15,12 +15,12 @@ class Auth extends React.Component {
     }
 
     setAuthed(state) {
-        sessionStorage.setItem("authed", state)
+        localStorage.setItem("authed", state)
     }
 
     setSessionProps(json) {
         Object.keys(json).forEach(function(key) {
-            sessionStorage.setItem(key, json[key]);
+            localStorage.setItem(key, json[key]);
           });
     }
 
