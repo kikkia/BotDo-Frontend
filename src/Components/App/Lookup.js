@@ -309,6 +309,7 @@ function Lookup() {
                   components={{
                     NoRowsOverlay: CustomNoRowsOverlay,
                   }}/>
+                  <p>NA guild history indexed since Apr 6, 2021, EU since Nov 11, 2021.</p>
               </Paper>
           </Grid>
       </Grid>
