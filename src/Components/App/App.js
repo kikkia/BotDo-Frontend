@@ -33,7 +33,6 @@ function App() {
             path="/guilds"
             component={Guilds}
           />
-          <Route component={Error}/>
         </Switch>
       </div>
     </BrowserRouter>
