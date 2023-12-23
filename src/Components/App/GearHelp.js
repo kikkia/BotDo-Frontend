@@ -3,7 +3,6 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { makeStyles } from '@material-ui/core/styles';
 import {Typography} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles({
   root: {
@@ -78,9 +77,6 @@ function GearHelp() {
               <Typography variant="h4">
                   Track your gear progression with Toshi
               </Typography>
-          </div>
-          <div className={classes.disclaimer}>
-            <Alert severity="warning">Gear tracking is currently only available through the bot, not the website.</Alert>
           </div>
           <div className={classes.container}>
             <div className={classes.markdown}>

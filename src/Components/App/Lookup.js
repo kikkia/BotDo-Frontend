@@ -5,6 +5,8 @@ import { DataGrid, GridOverlay } from '@material-ui/data-grid';
 import { Grid, Paper, Box, TextField, MenuItem, Select, FormControl } from '@material-ui/core'
 import { styled, createMuiTheme } from '@material-ui/core/styles'
 import theme from '../../theme';
+import Cookies from 'js-cookie'
+
 
 const dateFormattingOptions = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
 
@@ -152,6 +154,7 @@ function Lookup() {
     .then(res => {
       if (res.status === 401) {
         localStorage.setItem("authed", false);
+        Cookies.remove("token")
         history.push('/login')
       } if (res.status === 429) {
         throw new Error('You are searching too fast, users can only search 10 times per minute.')

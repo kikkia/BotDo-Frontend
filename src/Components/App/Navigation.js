@@ -31,13 +31,14 @@ const Navigation = (props) => {
     const history = useHistory();
     const classes = useStyles();
     const title = props.title;
-    const auth = localStorage.getItem("authed");
+    const auth = Cookies.get("userId") !== undefined;
+    console.log(Cookies.get("userId"))
     const [state, setState] = React.useState({
         state: false
     });
 
     const logout = (event) => {
-        localStorage.setItem("authed", false)
+        Cookies.remove("token")
         fetch("/api/auth/logout")
         history.push("/")
     }
@@ -50,9 +51,9 @@ const Navigation = (props) => {
         setState({ ...state, state: open });
       };
 
-    let avatarUrl = auth === "true" && Cookies.get("avatar") != "None" ? avatarUtils.getAvatarUrl(Cookies.get("userId"), Cookies.get("avatar")) 
+    let avatarUrl = auth && Cookies.get("avatar") !== undefined ? avatarUtils.getAvatarUrl(Cookies.get("userId"), Cookies.get("avatar")) 
         : "";
-    const userButton = auth === "true" ?
+    const userButton = auth === true ?
         <Button variant="contained" color="secondary" startIcon={<Avatar src={avatarUrl}/>}>
             {Cookies.get("username")}
         </Button> :

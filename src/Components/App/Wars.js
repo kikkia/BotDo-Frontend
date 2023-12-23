@@ -11,7 +11,7 @@ import { Chart, ArgumentAxis, ValueAxis,
 import { ArgumentScale, Animation } from '@devexpress/dx-react-chart';
 import { curveCatmullRom, area, } from 'd3-shape';
 import { scalePoint } from 'd3-scale';
-import { withStyles } from '@material-ui/core/styles';
+import Cookies from 'js-cookie'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,6 +65,7 @@ const Content = ({timeframe}) => {
         .then(res => {
           if (res.status === 401) {
             localStorage.setItem("authed", false);
+            Cookies.remove("token")
             history.push('/login')
           }
           return res.json()
@@ -91,6 +92,7 @@ const Content = ({timeframe}) => {
         .then(res => {
           if (res.status === 401) {
             localStorage.setItem("authed", false);
+            Cookies.remove("token")
             history.push('/login')
           }
           return res.json()
@@ -117,6 +119,7 @@ const Content = ({timeframe}) => {
         .then(res => {
           if (res.status === 401) {
             localStorage.setItem("authed", false);
+            Cookies.remove("token")
             history.push('/login')
           }
           return res.json()
