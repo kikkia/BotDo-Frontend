@@ -16,6 +16,7 @@ import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import { NavLink } from 'react-router-dom';
 
 const botInvite = "https://discord.com/oauth2/authorize?client_id=797767418285260802&scope=bot&permissions=2084039792"
+const backupBotInvite = "https://discord.com/oauth2/authorize?client_id=797767900399796275&scope=bot&permissions=2084039792"
 const docsLink = "https://github.com/kikkia/BotDO/blob/master/docs/getting_started.md"
  
 const useStyles = makeStyles(theme => ({
@@ -93,7 +94,7 @@ const Navigation = (props) => {
                 <ListItemIcon><SwapHorizIcon/></ListItemIcon>
                 <ListItemText primary="Change Guilds" />
             </ListItem>
-            <ListItem button key="add" onClick={() => window.open(botInvite, "_blank")}>
+            <ListItem button key="add" onClick={() => window.open(backupBotInvite, "_blank")}>
                 <ListItemIcon><ExitToAppIcon/></ListItemIcon>
                 <ListItemText primary="Add bot to server" />
             </ListItem>

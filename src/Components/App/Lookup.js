@@ -157,7 +157,7 @@ function Lookup() {
         Cookies.remove("token")
         history.push('/login')
       } if (res.status === 429) {
-        throw new Error('You are searching too fast, users can only search 10 times per minute.')
+        throw new Error('You are searching too fast, users can only search 50 times per day on the website. You can search more on the discord bot too.')
       }
       return res.json()
     })
