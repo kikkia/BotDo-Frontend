@@ -5,6 +5,7 @@ WORKDIR /app
 COPY package.json ./
 COPY package-lock.json ./
 
+ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN npm ci
 
 COPY . .
