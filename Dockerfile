@@ -1,20 +1,21 @@
-# pull official base image
-FROM node:13.12.0-alpine
+FROM node:18-alpine as build
 
-# set working directory
 WORKDIR /app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install app dependencies
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm install --silent
-RUN npm install react-scripts@3.4.1 -g --silent
 
-# add app
-COPY . ./
+RUN npm ci
 
-# start app
-CMD ["npm", "run", "start:prod"]
+COPY . .
+
+# The .env.prod file is expected to be present in the build context
+RUN npm run build:prod
+
+FROM nginx:stable-alpine
+
+COPY --from=build /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
