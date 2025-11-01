@@ -12,12 +12,14 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import SearchIcon from '@material-ui/icons/Search';
 import QuestionIcon from '@material-ui/icons/QuestionAnswerRounded';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import { NavLink } from 'react-router-dom';
 
 const botInvite = "https://discord.com/oauth2/authorize?client_id=797767418285260802&scope=bot&permissions=2084039792"
 const backupBotInvite = "https://discord.com/oauth2/authorize?client_id=797767900399796275&scope=bot&permissions=2084039792"
 const docsLink = "https://github.com/kikkia/BotDO/blob/master/docs/getting_started.md"
+const kofiLink = "https://ko-fi.com/kikkia"
  
 const useStyles = makeStyles(theme => ({
     menuButton: {
@@ -101,6 +103,10 @@ const Navigation = (props) => {
             <ListItem button key="docs" onClick={() => window.open(docsLink, "_blank")}>
                 <ListItemIcon><ExitToAppIcon/></ListItemIcon>
                 <ListItemText primary="Getting started with Toshi" />
+            </ListItem>
+            <ListItem button key="kofi" onClick={() => window.open(kofiLink, "_blank")}>
+                <ListItemIcon><FavoriteIcon/></ListItemIcon>
+                <ListItemText primary="Support on Ko-fi" />
             </ListItem>
         </List>
         <Divider />
