@@ -22,6 +22,12 @@ jobs:
     - name: Convert repository name to lowercase
       run: echo "IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
+    - name: Create .env.prod file
+      run: |
+        echo "REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}" > .env.prod
+        echo "REACT_APP_ENV=${{ secrets.REACT_APP_ENV }}" >> .env.prod
+        echo "REACT_APP_LOGIN_URL=${{ secrets.REACT_APP_LOGIN_URL }}" >> .env.prod
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
